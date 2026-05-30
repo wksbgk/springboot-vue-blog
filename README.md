@@ -28,3 +28,13 @@
 5. 前端: `cd blog-frontend && npm install && npm run dev`
 6. 访问 `http://localhost:5173`
 7. 默认管理员: 注册后在数据库中将 `role` 改为 `admin`
+
+## 效果截图
+
+| 登录 | 文章列表 |
+|------|---------|
+| ![登录](screenshots/login.png) | ![文章列表](screenshots/articles.png) |
+
+| 文章详情 | 评论 |
+|---------|------|
+| ![文章详情](screenshots/detail.png) | ![评论](screenshots/comment.png) |
