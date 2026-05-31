@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+
 @RequestMapping("/api/category")
 public class CategoryController {
 

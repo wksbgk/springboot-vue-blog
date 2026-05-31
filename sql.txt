@@ -6,7 +6,8 @@ CREATE TABLE user (
     nickname VARCHAR(50),
     email VARCHAR(100),
     role VARCHAR(10) DEFAULT 'user', -- admin / user
-    create_time DATETIME DEFAULT NOW()
+    create_time DATETIME DEFAULT NOW(),
+    update_time DATETIME DEFAULT NULL
 );
 
 -- 2.分类表
@@ -20,6 +21,8 @@ CREATE TABLE article (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(200) NOT NULL,
     content TEXT NOT NULL,
+    summary VARCHAR(500),
+    status VARCHAR(20) DEFAULT 'published',
     category_id BIGINT,
     user_id BIGINT,
     view_count INT DEFAULT 0,
@@ -33,6 +36,8 @@ CREATE TABLE comment (
     content VARCHAR(500),
     article_id BIGINT,
     user_id BIGINT,
+    username VARCHAR(50),
+    parent_id BIGINT DEFAULT NULL,
     create_time DATETIME DEFAULT NOW()
 );
 
@@ -41,3 +46,7 @@ CREATE TABLE tag (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50)
 );
+
+-- 6.默认管理员（密码 123，首次部署用）
+INSERT IGNORE INTO user (username, password, nickname, role)
+VALUES ('admin', '123', '管理员', 'admin');

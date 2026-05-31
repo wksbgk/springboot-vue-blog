@@ -11,7 +11,7 @@ spring:
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:123456}
 
-  # ✅ Redis 配置（我帮你加好了）
+  # Redis 配置
   redis:
     host: localhost
     port: 6379

@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
-@CrossOrigin
 @RequestMapping("/api/article")
 public class ArticleController {
 
@@ -52,7 +53,7 @@ public class ArticleController {
         // Redis 浏览量 +1
         try {
             redisUtil.increment(VIEW_PREFIX + id);
-        } catch (Exception ignored) {}
+        } catch (Exception e) { log.warn("Redis操作失败", e); }
 
         Article article = articleService.getById(id);
         if (article != null) {
@@ -63,7 +64,7 @@ public class ArticleController {
                     int base = article.getViewCount() != null ? article.getViewCount() : 0;
                     article.setViewCount(base + Integer.parseInt(v));
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { log.warn("Redis操作失败", e); }
         }
         return Result.success(article);
     }
@@ -103,7 +104,7 @@ public class ArticleController {
                     int base = a.getViewCount() != null ? a.getViewCount() : 0;
                     a.setViewCount(base + Integer.parseInt(v));
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { log.warn("Redis操作失败", e); }
         }
     }
 }
