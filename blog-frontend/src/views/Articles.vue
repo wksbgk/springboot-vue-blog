@@ -70,7 +70,7 @@
           <span>发布于 {{ formatTime(detail.createTime) }}</span>
           <span v-if="detail.status === 'draft'" class="badge badge-draft">草稿</span>
         </div>
-        <div class="detail-content">{{ detail.content }}</div>
+        <div class="detail-content" v-html="renderedContent"></div>
 
         <!-- 评论区 -->
         <div class="comment-section">
@@ -140,9 +140,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import request from '@/utils/request'
 import { useRouter } from 'vue-router'
+import { marked } from 'marked'
 
 const router = useRouter()
 const currentUser = ref(JSON.parse(localStorage.getItem('user') || '{}'))
@@ -163,6 +164,11 @@ const formatTime = (t) => {
   if (!t) return ''
   return new Date(t).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })
 }
+
+const renderedContent = computed(() => {
+  if (!detail.value.content) return ''
+  return marked(detail.value.content)
+})
 
 const handleLogout = () => {
   if (!confirm('确定要退出登录吗？')) return
@@ -308,7 +314,14 @@ nav { display: flex; gap: 4px; }
 .detail-box { width: 700px; max-height: 85vh; overflow-y: auto; }
 .detail-box h2 { font-size: 22px; margin: 16px 0 12px; text-align: center; }
 .detail-meta { display: flex; gap: 16px; align-items: center; font-size: 13px; color: #c0c4cc; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f0f0f0; }
-.detail-content { font-size: 15px; line-height: 2; color: #333; text-indent: 2em; }
+.detail-content { font-size: 15px; line-height: 2; color: #333; }
+.detail-content :deep(h2) { font-size: 18px; margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+.detail-content :deep(h3) { font-size: 16px; margin: 16px 0 8px; }
+.detail-content :deep(p) { margin: 8px 0; text-indent: 2em; }
+.detail-content :deep(ul), .detail-content :deep(ol) { padding-left: 2em; margin: 8px 0; }
+.detail-content :deep(code) { background: #f5f7fa; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+.detail-content :deep(pre) { background: #f5f7fa; padding: 12px 16px; border-radius: 8px; overflow-x: auto; margin: 12px 0; }
+.detail-content :deep(strong) { font-weight: 600; }
 
 /* 评论区 */
 .comment-section { margin-top: 28px; padding-top: 20px; border-top: 1px solid #f0f0f0; }

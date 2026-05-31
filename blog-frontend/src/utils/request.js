@@ -3,7 +3,7 @@ import axios from 'axios'
 
 // 创建 axios 实例
 const request = axios.create({
-    baseURL: 'http://localhost:8080', // 后端地址
+    baseURL: '', // Vite 代理 / nginx 代理统一处理
     timeout: 5000
 })
 
