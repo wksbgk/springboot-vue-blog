@@ -53,12 +53,4 @@ Docker 前端：`http://localhost:9091`，管理员 `admin` / `123`
 
 项目地址：[https://github.com/wksbgk/springboot-vue-blog](https://github.com/wksbgk/springboot-vue-blog)
 
-## 效果截图
-
-| 登录 | 文章列表 |
-|------|---------|
-| ![登录](screenshots/login.png) | ![文章列表](screenshots/articles.png) |
-
-| 文章详情 | 评论 |
-|---------|------|
-| ![文章详情](screenshots/detail.png) | ![评论](screenshots/comment.png) |
+ 
